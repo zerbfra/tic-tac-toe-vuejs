@@ -40,6 +40,12 @@ export default {
         const combination = _.map(win.split(''), n => parseInt(n))
         return _.difference(combination, moves).length === 0
       })
+    },
+    existsEmptyBoxes () {
+      let emptyBoxes = _.find(this.grid, (g) => {
+        return g.figure === -1
+      })
+      return emptyBoxes
     }
   },
   watch: {
@@ -62,11 +68,10 @@ export default {
       this.winBy = ''
     },
     select (index) {
-      if (this.winner) return
-      const figure = this.grid[index]
-      if (figure > -1) return
+      if (this.winner || this.grid[index].figure !== -1) return
       this.grid[index].figure = this.myTurn ? 1 : 0
       this.myTurn = !this.myTurn
+      if (!this.existsEmptyBoxes) this.winBy = 'no one'
     },
     restart () {
       console.log('Restarting game...')
