@@ -42,7 +42,7 @@ export default {
       })
     },
     existsEmptyBoxes () {
-      let emptyBoxes = _.find(this.grid, (g) => {
+      let emptyBoxes = !!_.find(this.grid, (g) => {
         return g.figure === -1
       })
       return emptyBoxes
